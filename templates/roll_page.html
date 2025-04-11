@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Dice Roller Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="game-card">
+            <h1>🎲 Royal Dice Roller</h1>
+
+            <form action="/roll-page" method="POST">
+                <button type="submit" class="roll-btn">Roll the Dice</button>
+            </form>
+
+            <div class="dice-area">
+                {% if result %}
+                    <img src="{{ url_for('static', filename='images/dice' + result|string + '.png') }}"
+                        alt="Dice {{ result }}" class="dice-img roll-animation">
+                    <p class="result-text">You rolled a <strong>{{ result }}</strong>!</p>
+                {% else %}
+                    <p class="result-text">Click the button to roll your dice!</p>
+                {% endif %}
+            </div>
+
+            <a href="/new-game">
+                <button class="new-game-btn">♻️ Start New Game</button>
+            </a>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash-messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="scoreboard-card">
+            <h2>🏆 Scoreboard</h2>
+            {% if history %}
+                <ul>
+                    {% for roll in history %}
+                        <li>Roll {{ loop.index }}: 🎲 {{ roll }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No rolls yet!</p>
+            {% endif %}
+            <h3 style="margin-top: 20px;">🎯 Total Score: {{ total }}</h3>
+
+        </div>
+    </div>
+    <audio id="diceSound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/dice-roll.mp3') }}" type="audio/mpeg">
+    </audio>
+    
+    
+    <script>
+        const form = document.querySelector("form");
+        const diceSound = document.getElementById("diceSound");
+    
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Rok le pehle
+            diceSound.play();
+        
+            setTimeout(() => {
+                form.submit(); // Ab bhej
+            }, 300); // 0.3s delay sound bajne ka time de
+        });
+        
+    </script>
+</body>
+
+</html>

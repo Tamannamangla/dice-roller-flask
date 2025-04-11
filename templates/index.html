@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎲 Dice Roller Game</title>
+  <style>
+    body {
+      background: #f7e4e4;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 20px #d88;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #e91e63;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+
+    .dice-img {
+      width: 120px;
+      height: 120px;
+      margin-top: 30px;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: rotate(0); }
+      25% { transform: rotate(20deg); }
+      50% { transform: rotate(-20deg); }
+      75% { transform: rotate(10deg); }
+      100% { transform: rotate(0); }
+    }
+
+    h1 {
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 24px;
+      color: #222;
+    }
+
+    #result-number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #00796b;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🎲 Dice Roller Game</h1>
+    <button onclick="rollDice()">Roll Dice</button>
+
+    <h2>Result:</h2>
+    <div id="result-number">🎯 Let's roll!</div>
+
+    <div id="dice-img-container" class="dice-area">
+      <img id="dice-img" src="{{ url_for('static', filename='images/dice1.png') }}" alt="Dice Face" class="dice-img">
+    </div>
+  </div>
+
+  <!-- Sound -->
+  <audio id="diceSound">
+    <source src="{{ url_for('static', filename='sounds/dice-roll.mp3') }}" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function rollDice() {
+      fetch('/roll')
+        .then(response => response.json())
+        .then(data => {
+          const diceImage = document.getElementById('dice-img');
+          const resultText = document.getElementById('result-number');
+          const diceSound = document.getElementById('diceSound');
+
+          // Update dice number text
+          resultText.innerText = `🎲 You rolled: ${data.value}`;
+
+          // Update dice image
+          diceImage.src = `/static/images/dice${data.value}.png`;
+
+          // Animate dice image
+          diceImage.classList.remove('dice-img');
+          void diceImage.offsetWidth;  // Force reflow
+          diceImage.classList.add('dice-img');
+
+          // Play sound
+          diceSound.play();
+        });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+body {
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.main-container {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
+
+.game-card, .scoreboard-card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 400px;
+  text-align: center;
+}
+
+h1, h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.roll-btn, .new-game-btn {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+.roll-btn:hover, .new-game-btn:hover {
+  background-color: #e91e63;
+}
+
+.dice-img {
+  width: 120px;
+  margin-top: 20px;
+  transition: transform 0.3s ease;
+}
+
+.roll-animation {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.flash-messages {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 10px;
+  list-style: none;
+}
+
+.scoreboard-card ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+}
+
+.scoreboard-card li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-weight: bold;
+}
